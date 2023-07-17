@@ -7,10 +7,11 @@ from email import encoders
 credentials = __import__("credentials")
 email_address = credentials.email
 password = credentials.app_password
+to_addr = credentials.to_address
 
 msg = MIMEMultipart()
 msg['From'] = "Mad Max"
-msg["To"] = "pydevelops@gmail.com"
+msg["To"] = to_addr
 msg["Subject"] = "Hello nerd, its Mad Max"
 
 with open("message.txt", 'r') as message:
@@ -31,4 +32,4 @@ text = msg.as_string()
 with smtplib.SMTP("smtp.gmail.com", 587) as server:
     server.starttls()
     server.login(email_address, password)
-    server.sendmail(email_address, "pydevelops@gmail.com", text)
+    server.sendmail(email_address, to_addr, text)
