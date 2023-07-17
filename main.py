@@ -1,4 +1,4 @@
-import smtplib, ssl
+import smtplib
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
@@ -6,7 +6,7 @@ from email import encoders
 
 credentials = __import__("credentials")
 email_address = credentials.email
-password = credentials.password
+password = credentials.app_password
 
 msg = MIMEMultipart()
 msg['From'] = "Mad Max"
@@ -28,9 +28,7 @@ with open(attached_file, "rb") as attachment:
 
 
 text = msg.as_string()
-context = ssl.create_default_context()
 with smtplib.SMTP("smtp.gmail.com", 587) as server:
     server.starttls()
-    #server.ehlo()
     server.login(email_address, password)
     server.sendmail(email_address, "pydevelops@gmail.com", text)
